@@ -5,10 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Star Wars RPG</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    
-
+    <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Days+One" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
+ 
+        .theme{
+            /* font-family: 'days-one'; */
+            font-size: '30px';
+            color: #FFE807;
+            text-decoration: none;
+            font-weight:bold;
+            text-transform: uppercase;
+            font-family: helvetica;
+            
+            
+            
+        }
     .characterSelection{
         display: flex;
         flex-direction: row;
@@ -18,61 +33,64 @@
     </style>
 </head>
 <body>
-<header>Star Wars RPG</header>
+<h1 class="theme">Star Wars RPG</h1>
+
+<h4>Select a player to start the battle. Each player has developed in their own way. Make sure your health points (hp) does not go to 0. Try to attack the other players to win.</h4>
+<br>
+<h2>Character Selection:</h2>
 
 <div class="characterSelection">
-
 <!-- Player 1 -->
-    <div class="w3-card-4 w3-light-grey" style="width:50%">
+    <div class="w3-card-4 w3-light-grey" id="player1" style="width:50%">
         <div class="w3-container w3-center">
           <h3>Angry Darth Vader</h3>
           <img src="./assets/images/DarthVaderAngry.jpg" alt="Avatar" style="width:80%">
-          <h5 class="heathPoints"></h5>
+          <h5 class="heathPoints">HP: 500</h5>
         </div>
       </div>
 
 <!-- Player 2 -->
-      <div class="w3-card-4 w3-light-grey" style="width:50%">
+      <div class="w3-card-4 w3-light-grey" id="player2" style="width:50%">
         <div class="w3-container w3-center">
           <h3>All hail Yoda</h3>
           <img src="./assets/images/HailYoda.jpg" alt="Avatar" style="width:80%">
-          <h5 class="heathPoints"></h5>        
+          <h5 class="heathPoints">HP: 900</h5>        
         </div>
       </div>
 
 <!-- Player 3 -->
-      <div class="w3-card-4 w3-light-grey" style="width:50%">
+      <div class="w3-card-4 w3-light-grey" id="player3" style="width:50%">
         <div class="w3-container w3-center">
           <h3>The rebels are ready</h3>
           <img src="./assets/images/RebelsReady.jpg" alt="Avatar" style="width:80%">
-          <h5 class="heathPoints"></h5>        
+          <h5 class="heathPoints">HP: 100</h5>        
         </div>
       </div>
 
 <!-- Player 4 -->
-      <div class="w3-card-4 w3-light-grey" style="width:50%">
+      <div class="w3-card-4 w3-light-grey" id="player4" style="width:50%">
         <div class="w3-container w3-center">
           <h3>Gather everyone</h3>
           <img src="./assets/images/StarWarsCollection.jpg" alt="Avatar" style="width:80%">
-          <h5 class="heathPoints"></h5>
+          <h5 class="heathPoints">HP: 10,000</h5>
         </div>
       </div>
 
 <!-- Player 5 -->
-      <div class="w3-card-4 w3-light-grey" style="width:50%">
+      <div class="w3-card-4 w3-light-grey" id="player5" style="width:50%">
         <div class="w3-container w3-center">
           <h3>Storm trooper in action</h3>
           <img src="./assets/images/StormTrooper.jpg" alt="Avatar" style="width:80%">
-          <h5 class="heathPoints"></h5>
+          <h5 class="heathPoints">HP: 50</h5>
         </div>
       </div>
       
 </div>
 
-<div class="yourCharacter"></div>
-<div class="enemies"></div>
+<div class="yourCharacter">Your Character</div>
+<div class="enemySelection">Eneimies</div>
 <div class="fightSection"></div>
-<button class="attack">Attack</button>
+<button class="attack w3-black w3-hover-red w3-jumbo">Attack</button>
 <div class="defender"></div>
 <div class="messageBox"></div>
 
@@ -83,9 +101,48 @@
     <!--update the action that is happening-->
     <!--reset the game to the starting point-->
 
-    <script type="text/javascript">
+  <script type="text/javascript">
+$(document).ready(function(){
+
+
+
+  var characterSelection = $(".characterSelection").siblings
+
+  var player1HP = 500; 
+  var player2HP = 900;
+  var player3HP = 100;
+  var player4HP = 10000;
+  var player5HP = 50;
+
+  $(".characterSelection").children().on("click", function(event) {
+    //figure out how to prevent the children from inheriting the events
+    $(this).appendTo(".yourCharacter");
+    var iChooseYou = $(this).attr("id");
+    console.log('Character selected: ' + iChooseYou);
+    var characterArray = ['player1', 'player2', 'player3', 'player4', 'player5'];    
+    for (var i = 0; i < characterArray.length; i++) {
+      if ( characterArray[i] === iChooseYou) {
+        characterArray.splice(i, 1);
+      } 
+    }
+    console.log($(".characterSelection").children());
+    $(".characterSelection").children().appendTo(".enemySelection");
+    console.log(event.target);
+  });
+
+  // $(".enemySelection")
+ 
+
+}); //end of document.ready
+
+
+
+// var randomEnemy = Math.floor(Math.random()*characterArray.length);
+//     $(randomEnemy).appendTo(".")
+    
+
     
     
-    </script>
+  </script>
 </body>
 </html>
