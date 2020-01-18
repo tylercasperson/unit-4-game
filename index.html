@@ -117,48 +117,46 @@ $(document).ready(function(){
   var player3HP = 100;
   var player4HP = 10000;
   var player5HP = 50;
-// add if statement to validate fill spot
-// if ( $('.enemy').length === 0 )  {
   
+  //Player selection
   $(".player").on("click", function(event) {
     if($('.enemy').length === 0 ) {
-    console.log('here:');
-    console.log($('.yourCharacter').hasClass('.player'));
+      $(this).appendTo(".yourCharacter");
+      var iChooseYou = $(this).attr("id");
+      console.log('Character selected: ' + iChooseYou);
+      var characterArray = ['player1', 'player2', 'player3', 'player4', 'player5'];    
+      for (var i = 0; i < characterArray.length; i++) {
+        if ( characterArray[i] === iChooseYou) {
+          characterArray.splice(i, 1);
+        } 
+      }
+      $(".characterSelection").children().appendTo(".enemySelection");
+      $(".enemySelection").children().removeClass("player").addClass("enemy");
+      $(".enemy").attr("onclick", "").unbind("click");
+//enemy selection
+      $(".enemy").on("click", function(event) {
+        console.log('Enemy selected: ' + this);
+        if($('.opponent').length === 0 ) {
+          $(this).appendTo(".defender");
+          var enemy = $(this).attr("id");
+          var enemyArray = characterArray;
+          for (var i = 0; i < enemyArray.length; i++) {
+            if( enemyArray[i] === enemy) {
+            enemyArray.splice(i, 1);
+          }
+        }
+        $(".defender").children().removeClass("enemy").addClass("opponent");
+
+          //add attack button 
 
 
-    $(this).appendTo(".yourCharacter");
-    var iChooseYou = $(this).attr("id");
-    console.log('Character selected: ' + iChooseYou);
-    var characterArray = ['player1', 'player2', 'player3', 'player4', 'player5'];    
-    for (var i = 0; i < characterArray.length; i++) {
-      if ( characterArray[i] === iChooseYou) {
-        characterArray.splice(i, 1);
-      } 
-    }
-    $(".characterSelection").children().appendTo(".enemySelection");
-    $(".enemySelection").children().removeClass("player").addClass("enemy");
-    console.log('Number of items in your Character enemy: ' + $('.enemy').length); 
-    
-    console.log($('.characterSelection').length);
-    }
+
+        } //end of if .enemy
+      }) //end of .enemy click
+    } //end of if .player
   }) //end of .player click
-//} //end of if statement checking .yourCharacter
 
-  // $(".enemySelection").children().on("click", function(event) {
-  //   $(this).appendTo(".defender");
-  //   var enemy = $(this).attr("id");
-  //   var enemyArray = characterArray;
-  //   for (var i = 0; i < enemyArray.length; i++) {
-  //     if( enemyArray[i] === enemy) {
-  //     enemyArray.splice(i, 1);
-  //   }
-  // }
-  // console.log('Enemy Array: ' + enemyArray);
-  // console.log(enemy);
-  // console.log('Number of items in your Character: ' + $('.yourCharacter').children().length);
-
-  // })
-
+  
   
 
 
