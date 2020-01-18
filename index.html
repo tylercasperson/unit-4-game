@@ -25,7 +25,6 @@
         }
         .player{
           flex-basis: 0 0 0;
-          
         }
         .group{
           display: flex;
@@ -88,15 +87,19 @@
       </div>
       
 </div>
+<br>
 <h3>Your Character</h3>
-<div class="yourCharacter grou"></div>
+<div class="yourCharacter group"></div>
+<br>
 <h3>Enemies Selection</h3>
-<div class="enemySelection group w3-cell m3"></div>
+<div class="group w3-cell m3 enemySelection"></div>
+<br>
 <h3>Fight</h3>
-<div class="fightSection w3-cell m3"></div>
-<button class="attack w3-black w3-hover-red w3-jumbo">Attack</button>
+<div class="w3-cell m3 fightSelection"></div>
+<button class="w3-black w3-hover-red w3-jumbo" id="attack">Attack</button>
+<br>
 <h3>Opponent</h3>
-<div class="defender group w3-cell m3"></div>
+<div class="group w3-cell m3 defender"></div>
 <div class="messageBox"></div>
 
     <!--flex grid for charicters-->
@@ -109,16 +112,20 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-  var characterSelection = $(".characterSelection").siblings
-
   var player1HP = 500; 
   var player2HP = 900;
   var player3HP = 100;
   var player4HP = 10000;
   var player5HP = 50;
+// add if statement to validate fill spot
+// if ( $('.enemy').length === 0 )  {
+  
+  $(".player").on("click", function(event) {
+    if($('.enemy').length === 0 ) {
+    console.log('here:');
+    console.log($('.yourCharacter').hasClass('.player'));
 
-  $(".characterSelection").children().on("click", function(event) {
-    //figure out how to prevent the children from inheriting the events
+
     $(this).appendTo(".yourCharacter");
     var iChooseYou = $(this).attr("id");
     console.log('Character selected: ' + iChooseYou);
@@ -128,26 +135,30 @@ $(document).ready(function(){
         characterArray.splice(i, 1);
       } 
     }
-    console.log($(".characterSelection").children());
     $(".characterSelection").children().appendTo(".enemySelection");
-    event.stopImmediatePropagation();
-    console.log(event.isImmediatePropagationStopped());
-  });
-
-  $(".enemySelection").children().on("click", function(event) {
-    $(this).qppendTo(".defender");
-    var enemy = $(this).attr("id");
-    var enemyArray = characterArray;
-    for (var i = 0; i < enemyArray.length; i++) {
-      if( enemyArray[i] === enemy) {
-      enemyArray.splice(i, 1);
+    $(".enemySelection").children().removeClass("player").addClass("enemy");
+    console.log('Number of items in your Character enemy: ' + $('.enemy').length); 
+    
+    console.log($('.characterSelection').length);
     }
-  }
-  console.log('Enemy Array: ' + enemyArray);
-  console.log(enemy);
+  }) //end of .player click
+//} //end of if statement checking .yourCharacter
 
-  })
- 
+  // $(".enemySelection").children().on("click", function(event) {
+  //   $(this).appendTo(".defender");
+  //   var enemy = $(this).attr("id");
+  //   var enemyArray = characterArray;
+  //   for (var i = 0; i < enemyArray.length; i++) {
+  //     if( enemyArray[i] === enemy) {
+  //     enemyArray.splice(i, 1);
+  //   }
+  // }
+  // console.log('Enemy Array: ' + enemyArray);
+  // console.log(enemy);
+  // console.log('Number of items in your Character: ' + $('.yourCharacter').children().length);
+
+  // })
+
   
 
 
