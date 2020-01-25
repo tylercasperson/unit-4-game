@@ -14,7 +14,7 @@ $(document).ready(function(){
           } 
         }
         $(".characterSelection").children().appendTo(".enemySelection");
-        $(".enemySelection").children().removeClass("player").addClass("enemy");
+        $(".enemySelection").children().removeClass("player").addClass("enemy group");
         $(".enemy").attr("onclick", "").unbind("click");
       } //end of enemy if 
       function pickYourOpponent() {

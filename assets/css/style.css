@@ -1,5 +1,5 @@
 body{
-    background-image: url("./assets/images/Stars.jpg");
+    background-image: url("../images/Stars.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     color: whitesmoke;
@@ -12,7 +12,6 @@ body{
     border: none;
   }
   .theme{
-      /* font-family: 'days-one'; */
       font-size: '30px';
       color: #FFE807;
       text-decoration: none;
@@ -21,7 +20,6 @@ body{
       font-family: helvetica;
   }
   #player1,#player2,#player3,#player4,#player5{
-    /* flex-basis: 0 0 0; */
     height: auto;
     width: 400px;
   }
@@ -29,3 +27,4 @@ body{
     display: flex;
     align-items: flex-start;
   }
+  
