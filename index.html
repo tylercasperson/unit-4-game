@@ -146,7 +146,10 @@ function pickYourCharacter() {
       $("#" + enemy).appendTo(".defender");
       console.log('Enemy:' + enemy);
       console.log('Fight begin! ' + iChooseYou + ' vs ' + enemy);
-    $(".defender").children().removeClass("enemy").addClass("opponent");
+      $(".defender").children().removeClass("enemy").addClass("opponent playerRound");
+      var playerTitle = $(".player").find("h3").text();
+      var enemyTitle = $(".opponent").find("h3").text();
+      $(".messageBox").text("Fight begin! " + playerTitle + " vs " + enemyTitle);
   } //end of opponent if 
  } //end of pickYourOpponent
  if ($(".opponent").length === 0){
@@ -156,47 +159,71 @@ function pickYourCharacter() {
 
   $(".player").on("click", function(event) {
     var playerSelection = $(this).attr("id");
+    var playerIndex = (playerSelection.charAt(6)-1);
+    var playerHP = HP[playerIndex];
     localStorage.removeItem("enemy");
     localStorage.setItem("player", playerSelection);
+    localStorage.setItem("playerHP", playerHP);
     pickYourCharacter();
 
     $(".enemy").on("click", function(event) {
       var enemySelected = $(this).attr("id");
+      var enemyIndex = (enemySelected.charAt(6)-1);
+      var enemyHP = HP[enemyIndex];
       localStorage.setItem("enemy", enemySelected);
+      localStorage.setItem("enemyHP", enemyHP);
       pickYourCharacter();
     });  //end of enemy click
   });  //pickYourCharacter
 
   $('.attack').on("click", function() {
+    console.log();
+    if(($(".player").length === 5) && ($(".enemy").length === 0)){
+      $(".messageBox").text("Please select a character.");
+    } else if($(".opponent").length === 0) {
+      $(".messageBox").text("Please select an opponent.");
+    } else {
       kaPow();
+    }
     });  //end of the attack click
+
+
+
+//fix the kapow fucntion
+
+
+
+
 
   function kaPow(){
     var playerIndex = $(".yourCharacter").children().attr("id").charAt(6)-1;
     var enemyIndex = $(".defender").children().attr("id").charAt(6)-1;
-    console.log('1: ' + $(".playerRound").length);
-    console.log('2: ' + $(".opponentRound").length);
-    console.log('3: ' +3 );
-    if ($(".playerRound").length === 0) {
-        console.log("option1: " + $(".playerRound").length);
-        var playerHP = HP[playerIndex];
-        localStorage.removeItem("playerHP");
-        localStorage.setItem("playerHP", playerHP); 
-        $(".player").addClass("playerRound");
-        var enemyHP = HP[enemyIndex];
-        localStorage.removeItem("enemyHP");
-        localStorage.setItem("enemyHP", enemyHP);     
-        $(".opponent").addClass("opponentRound");    
-    } else if ("option2: " + $(".opponentRound").length === 0) {
-        console.log($(".opponentRound").length);
-        var enemyHP = HP[enemyIndex];
-        localStorage.removeItem("enemyHP");
-        localStorage.setItem("enemyHP", enemyHP); 
-        $(".opponent").addClass("opponentRound");
-    } else {
-        console.log("else");
-        playerHP = localStorage.getItem("playerHP");
-        enemyHP = localStorage.getItem("enemyHP");
+
+    // if ($(".playerRound").length === 0) {
+    //     console.log("option1: " + $(".playerRound").length);
+    //     var playerHP = HP[playerIndex];
+    //     localStorage.removeItem("playerHP");
+    //     localStorage.setItem("playerHP", playerHP); 
+    //     console.log("playerHP: " + playerHP);
+    //     $(".player").addClass("playerRound");
+    ////     var  =  = HP[enemyIndex];
+    ////     localStorage.removeItem(" = ");
+    ////     localStorage.setItem(" = ",  = );
+    ////     console.log(" = : " +  = );     
+    //     $(".opponent").addClass("opponentRound");    
+    // } else if ($(".opponentRound").length === 0) {
+    //     console.log("option2: " + $(".opponentRound").length);
+    ////     var  =  = HP[enemyIndex];
+    ////     localStorage.removeItem(" = ");
+    ////     localStorage.setItem(" = ",  = ); 
+    ////     console.log(" = : " +  = );
+    //     $(".opponent").addClass("opponentRound");
+    // } else {
+        
+        var playerHP = localStorage.getItem("playerHP");
+        var enemyHP = localStorage.getItem("enemyHP");
+        console.log('initial playerHP: ' + playerHP);
+        
         var attackPower = [
           {
             name: 'Player1',
@@ -225,33 +252,33 @@ function pickYourCharacter() {
         var counterPlan = attackPower[enemyIndex].attack;
         var counterAttack = counterPlan[Math.floor(Math.random()*counterPlan.length)];
         console.log('Attack: ' + attackResults);
-        console.log('Counter AttackL ' + counterAttack);
-        enemyHP = enemyHP - attackResults;
-        $("#heathPoints" + (enemyIndex+1)).text("HP: " + enemyHP);
-        console.log($("#healthPoints1").innerText);
-        $("#healthPoints1").empty();
-        localStorage.setItem("enemyHP",enemyHP);
-        playerHP = playerHP - counterAttack;
+        console.log('Counter Attack: ' + counterAttack);
+        var playerHP = playerHP - counterAttack;
+        var enemyHP = enemyHP - attackResults;
         $("#heathPoints" + (playerIndex+1)).text("HP: " + playerHP);
+        $("#heathPoints" + (enemyIndex+1)).text("HP: " + enemyHP);
         localStorage.setItem("playerHP",playerHP);
+        localStorage.setItem("enemyHP",enemyHP);
         console.log('playerHP: ' + playerHP); 
-        console.log('enemyHP: ' + enemyHP);
-
+        console.log('enemyHP: ' + enemyHP); 
         if (playerHP<=0){
+          $(".attack").hide();
           $(".messageBox").text("You lost. Try again next time.");
           $(".messageBox").append("<button class='restart'>Restart</button>");
           $(".restart").on("click", function(){
             console.log("restart");
             location.reload(true);
           })
-        } else if(enemyHP<=0) {  //(enemyHP<=0)
+        } else if(enemyHP <=0) {  //( = <=0)
           $('.opponent').remove();
           $(".messageBox").text("You defeated the immediate enemy. Please select another enemy.");
+          localStorage.removeItem("enemy");
+          localStorage.removeItem("enemyHP");
           pickYourCharacter();
         }   
-    } //end of first else statement
+  //  } //end of first else statement
     console.log('PlayerHP: ' + playerHP);
-    console.log('EnemyHP: ' + enemyHP);
+    //console.log('EnemyHP: ' +  = );
   } // end of kaPow function
 }); //end of document.ready    
     
